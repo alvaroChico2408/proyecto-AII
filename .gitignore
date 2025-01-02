@@ -1,3 +1,7 @@
 venv/
 
 videojuegosProyecto/videojuegosProyecto/__pycache__
+
+videojuegosProyecto/main/__pycache__
+
+videojuegosProyecto/main/migrations/__pycache__
