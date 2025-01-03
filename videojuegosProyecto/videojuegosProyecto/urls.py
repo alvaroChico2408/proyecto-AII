@@ -22,4 +22,5 @@ urlpatterns = [
     path('', views.inicio),
     path('cargarBaseDatos/', views.database),
     path('ejecutarCarga/', views.ejecutar_carga),
+    path('eliminarBaseDatos/',views.eliminar_database),
 ]

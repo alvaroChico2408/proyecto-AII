@@ -30,4 +30,16 @@ def ejecutar_carga(request):
         })
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)})
+    
+def eliminar_database(request):
+    if request.method == "POST":
+        try:
+            Developer.objects.all().delete()
+            Company.objects.all().delete()
+            Platform.objects.all().delete()
+            VideoGame.objects.all().delete()
+            return JsonResponse({'status': 'success', 'message': 'Base de datos eliminada correctamente'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
 
