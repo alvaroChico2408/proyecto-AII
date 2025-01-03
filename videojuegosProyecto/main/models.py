@@ -35,12 +35,13 @@ class Platform(models.Model):
 
 class VideoGame(models.Model):
     id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=200, unique=True)
+    title = models.CharField(max_length=200)
     year = models.IntegerField()
     description = models.TextField()
-    developers = models.ManyToManyField(Developer)
-    companies = models.ManyToManyField(Company)
-    platforms = models.ManyToManyField(Platform)
+    
+    developers = models.CharField(max_length=500, blank=True)  # Guardará nombres separados por comas
+    companies = models.CharField(max_length=500, blank=True)   # Guardará nombres separados por comas
+    platforms = models.CharField(max_length=500, blank=True)   # Guardará nombres separados por comas
 
     def __str__(self):
         return self.title
