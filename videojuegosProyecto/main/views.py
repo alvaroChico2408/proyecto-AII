@@ -43,3 +43,14 @@ def eliminar_database(request):
             return JsonResponse({'status': 'error', 'message': str(e)})
     return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
 
+def verificar_estado_bd(request):
+    hay_datos = VideoGame.objects.exists() or Platform.objects.exists() or Developer.objects.exists() or Company.objects.exists()
+
+    return JsonResponse({
+        'hay_datos': hay_datos,
+        'juegos': VideoGame.objects.count(),
+        'plataformas': Platform.objects.count(),
+        'desarrolladores': Developer.objects.count(),
+        'companias': Company.objects.count(),
+    })
+

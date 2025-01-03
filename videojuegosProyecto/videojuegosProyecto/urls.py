@@ -23,4 +23,5 @@ urlpatterns = [
     path('cargarBaseDatos/', views.database),
     path('ejecutarCarga/', views.ejecutar_carga),
     path('eliminarBaseDatos/',views.eliminar_database),
+    path('verificarEstadoBD/', views.verificar_estado_bd, name='verificarEstadoBD'),
 ]
