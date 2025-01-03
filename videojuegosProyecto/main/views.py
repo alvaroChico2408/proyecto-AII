@@ -5,7 +5,7 @@ from .populateDB import populateDatabase
 
 #muestra los títulos de las recetas que están registradas
 def inicio(request):
-    return render(request,'base.html')
+    return render(request,'index.html')
 
 def run_population(request):
     populateDatabase()

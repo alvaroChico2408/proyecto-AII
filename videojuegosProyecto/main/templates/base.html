@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Game Zone</title>
+    <title>Retro Games Web</title>
 
     <!-- Estilos de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -12,14 +12,15 @@
     <!-- Fuente estilo "Pixel Art" -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <!-- Archivo CSS personalizado -->
-    <link rel="stylesheet" href="static/css/styles.css">
+    <link rel="stylesheet" href="static/css/base_styles.css">
+	{% block link_css %}{% endblock %}
+
 </head>
 <body>
-
     <!-- Barra de navegación -->
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/"><i class="fas fa-gamepad"></i> Game Zone</a>
+            <a class="navbar-brand" href="/"><i class="fas fa-gamepad"></i> Retro Games Web</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -43,15 +44,32 @@
         </div>
     </nav>
 
-    <!-- Contenido dinámico -->
-    <div class="container mt-4">
-        {% block contenido %}{% endblock %}
-    </div>
-
+	<!-- Contenido dinámico con fondo animado -->
+	<div class="content-wrapper">
+		<div class="container">
+			{% block contenido %}{% endblock %}
+		</div>
+	</div>
+	
+		
     <!-- Pie de página -->
-    <footer class="text-center text-white mt-4">
-        <p>&copy; 2025 Game Zone - Todos los derechos reservados</p>
-    </footer>
+    <footer class="footer">
+		<div class="footer-text">
+			<p>© Trabajo AII - Retro Games Web</p>
+			<p>Álvaro Chico Castellano</p>
+		</div>
+		<div class="pacman-container">
+			<!-- Pac-Man y fantasmas a la izquierda -->
+			<img src="static/img/pacman-1-unscreen.gif" alt="Pac-Man izquierda" class="pacman-left">
+			
+			<!-- Nuevos elementos en el centro -->
+			<img src="static/img/nave1.gif" alt="nave" class="rocket">
+			
+			<!-- Pac-Man y fantasmas a la derecha -->
+			<img src="static/img/pacman-2-unscreen.gif" alt="Pac-Man derecha" class="pacman-right">
+		</div>
+	</footer>
+	
 
     <!-- Scripts de Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
