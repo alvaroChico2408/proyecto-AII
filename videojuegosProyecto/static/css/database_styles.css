@@ -50,7 +50,6 @@
 
 .stats-container {
     margin-top: 30px;
-    background: rgba(0, 0, 0, 0.7);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
@@ -77,7 +76,7 @@
     text-transform: uppercase;
     font-weight: bold;
     bottom: 10px; /* Lo mantiene en la parte inferior */
-    right: 200px;  /* Lo empuja más a la derecha */
+    right: 300px;  /* Lo empuja más a la derecha */
     width: 220px;
 }
 
