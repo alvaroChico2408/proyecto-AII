@@ -12,7 +12,7 @@ getattr(ssl, '_create_unverified_context', None)):
 PAGINAS= 5
 
 
-def populateDatabase():
+def populate_database():
     
     #borrar tablas
     Developer.objects.all().delete()

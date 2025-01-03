@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load static %}
+{% block link_css %} <link rel="stylesheet" href="{% static 'css/database_styles.css' %}"> {% endblock %}
+{% block contenido %}
+<div class="carga-container">
+    <p class="carga-text">Pulsa aquí para realizar la carga de la base de datos</p>
+    <a href="#" class="btn-neon">Cargar Base de Datos</a>
+</div>
+{% endblock %}
