@@ -20,5 +20,6 @@ from main import views
 
 urlpatterns = [
     path('', views.inicio),
-    path('cargarBaseDatos/', views.database,),
+    path('cargarBaseDatos/', views.database),
+    path('ejecutarCarga/', views.ejecutar_carga),
 ]
