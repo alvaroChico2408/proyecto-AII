@@ -65,3 +65,38 @@
     font-family: 'Press Start 2P', cursive;
     margin: 5px 0;
 }
+
+/* Botón de eliminar */
+.delete-btn {
+    background: linear-gradient(90deg, #ff0000, #ff4500);
+    box-shadow: 0px 0px 15px rgba(255, 0, 0, 1);
+    margin-left: 200px;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    bottom: 10px; /* Lo mantiene en la parte inferior */
+    right: 200px;  /* Lo empuja más a la derecha */
+    width: 220px;
+}
+
+
+.delete-btn:hover {
+    box-shadow: 0px 0px 25px rgba(255, 0, 0, 1);
+    transform: scale(1.05);
+}
+
+/* Asegurar que el texto se divida en dos líneas */
+.delete-btn br {
+    content: "";
+    display: block;
+}
+
+/* Caja para los contadores y el botón de eliminar */
+.stats-wrapper {
+    margin-top: 15px;
+    padding: 10px;
+    background: rgba(10, 10, 10, 0.8);
+    border-radius: 10px;
+}

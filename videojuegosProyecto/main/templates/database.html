@@ -8,11 +8,17 @@
     <p id="status-message" class="status-message"></p> 
 </div>
 
-<div class="stats-container">
-    <p id="juegos-contador" class="stats-text">Juegos insertados: 0</p>
-    <p id="plataformas-contador" class="stats-text">Plataformas insertadas: 0</p>
-    <p id="desarrolladores-contador" class="stats-text">Desarrolladores insertados: 0</p>
-    <p id="companias-contador" class="stats-text">Compañías insertadas: 0</p>
+<!-- Nueva sección dentro de la caja para evitar que crezca fuera de la parte roja -->
+<div class="stats-wrapper">
+    <div class="stats-container">
+        <p id="juegos-contador" class="stats-text">Juegos insertados: 0</p>
+        <p id="plataformas-contador" class="stats-text">Plataformas insertadas: 0</p>
+        <p id="desarrolladores-contador" class="stats-text">Desarrolladores insertados: 0</p>
+        <p id="companias-contador" class="stats-text">Compañías insertadas: 0</p>
+    </div>
+
+    <!-- Botón de eliminar dentro de la misma sección -->
+    <button id="btn-eliminar" class="btn-neon delete-btn">ELIMINAR<br>BASE DE DATOS</button>
 </div>
 {% endblock %}
 

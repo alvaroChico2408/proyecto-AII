@@ -14,6 +14,12 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             let statusMessage = document.getElementById("status-message");
             if (data.status === "success") {
+                 // Actualizar contadores con los datos recibidos
+                document.getElementById("juegos-contador").innerText = "Juegos insertados: " + data.juegos;
+                document.getElementById("plataformas-contador").innerText = "Plataformas insertadas: " + data.plataformas;
+                document.getElementById("desarrolladores-contador").innerText = "Desarrolladores insertados: " + data.desarrolladores;
+                document.getElementById("companias-contador").innerText = "Compañías insertadas: " + data.companias;
+
                 statusMessage.innerText = data.message;
                 statusMessage.style.color = "green";
                 button.innerText = "Carga completada";
