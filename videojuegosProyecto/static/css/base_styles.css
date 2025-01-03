@@ -28,10 +28,13 @@ body {
 .container {
     background: rgba(0, 0, 0, 0.85);
     border-radius: 15px;
-    padding: 30px;
+    padding-bottom: 15px;
     box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.6);
     width: 90%;
     max-width: 1200px;
+    max-height: 700px; /* Limita la altura para que no se desborde */
+    overflow-y: auto;
+    margin: 0 auto 15vh auto; /* Se acerca más a la parte superior */
 }
 
 /* Pie de página fijo */

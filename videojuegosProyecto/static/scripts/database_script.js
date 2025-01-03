@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             let statusMessage = document.getElementById("status-message");
             if (data.status === "success") {
-                statusMessage.innerText = "✅ " + data.message;
+                statusMessage.innerText = data.message;
                 statusMessage.style.color = "green";
                 button.innerText = "Carga completada";
             } else {

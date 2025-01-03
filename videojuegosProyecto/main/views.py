@@ -14,6 +14,7 @@ def ejecutar_carga(request):
     print("hola")
     try:
         populate_database()  # Llamamos a la función que popula la base de datos
+        print("hola2")
         return JsonResponse({'status': 'success', 'message': 'Base de datos cargada correctamente'})
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)})
