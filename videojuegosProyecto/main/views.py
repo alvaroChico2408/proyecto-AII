@@ -57,8 +57,19 @@ def verificar_estado_bd(request):
 def busqueda(request):
     return render(request, "busqueda.html")
 
-def buscar_anyo(request):
-    return render(request, "buscar_anyo.html")
+def buscar_nombre(request):
+    return render(request, "buscar_nombre.html")
+
+def buscar_por_nombre(request):
+    query = request.GET.get("q", "")
+
+    if query:
+        juegos = VideoGame.objects.filter(title__icontains=query).values(
+            "title", "year", "platforms", "developers", "description"
+        )
+        return JsonResponse(list(juegos), safe=False)
+    
+    return JsonResponse([], safe=False)
 
 def buscar_plataforma(request):
     return render(request, "buscar_plataforma.html")
@@ -68,3 +79,19 @@ def buscar_desarrollador(request):
 
 def buscar_compania(request):
     return render(request, "buscar_compania.html")
+
+def obtener_companias(request):
+    companias = list(Company.objects.values_list('name', flat=True).distinct())
+    return JsonResponse(companias, safe=False)
+
+def buscar_por_compania(request):
+    compania = request.GET.get('q', '')
+
+    if not compania:
+        return JsonResponse([], safe=False)
+
+    juegos = VideoGame.objects.filter(companies__icontains=compania).values(
+        'title', 'year', 'platforms', 'developers', 'opinion'
+    )
+
+    return JsonResponse(list(juegos), safe=False)

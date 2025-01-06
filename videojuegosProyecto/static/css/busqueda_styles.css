@@ -5,9 +5,12 @@
     padding: 20px;
     box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.6);
     width: 90%;
-    max-width: 600px;
+    max-width: auto;
     margin: 50px auto;
     text-align: center;
+    align-items: center; /* Alinea en una única línea */
+    justify-content: flex-start; /* Asegura que estén alineados en una línea */
+    display: flex;
 }
 
 /* Título de la búsqueda */
@@ -23,6 +26,15 @@
     flex-direction: column;
     gap: 10px;
     margin-top: 15px;
+}
+
+/* Etiqueta de búsqueda */
+.busqueda-label {
+    font-size: 1rem;
+    color: yellow;
+    text-shadow: 2px 2px 6px rgba(255, 204, 0, 0.8);
+    margin-right: 10px;
+    white-space: nowrap; /* Evita saltos de línea */
 }
 
 /* Botones de búsqueda */
@@ -48,23 +60,34 @@
     margin-top: 20px;
 }
 
+/* Campo de entrada */
 .busqueda-input {
-    width: 80%;
-    padding: 10px;
+    padding: 6px;
     font-size: 1rem;
-    font-family: 'Press Start 2P', cursive;
-    border: 2px solid #ffcc00;
-    background-color: black;
+    border-radius: 5px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
     color: white;
     text-align: center;
+    margin-right: 10px;
 }
 
+/* Botón de búsqueda */
 .buscar-btn {
-    background: linear-gradient(90deg, #00ff00, #008000);
-    box-shadow: 0px 0px 10px rgba(0, 255, 0, 0.8);
+    font-size: 1rem;
+    padding: 6px 12px;
+    background: linear-gradient(90deg, #00ff00, #009900);
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 0px 8px rgba(0, 255, 0, 0.8);
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-left: 100px;
 }
 
 .buscar-btn:hover {
+    transform: scale(1.05);
     box-shadow: 0px 0px 15px rgba(0, 255, 0, 1);
 }
 

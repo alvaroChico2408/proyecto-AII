@@ -6,18 +6,14 @@
 
 {% block contenido %}
 <div class="busqueda-container">
-    <h2 class="busqueda-title">🏢 Búsqueda por Compañía</h2>
-
-    <div class="busqueda-formulario">
-        <label for="busqueda-compania" class="busqueda-label">Introduce una compañía:</label>
-        <input type="text" id="busqueda-compania" class="busqueda-input">
-        <button id="buscar-btn" class="busqueda-btn buscar-btn">🔎 Buscar</button>
-    </div>
-
-    <div id="resultado-busqueda" class="busqueda-resultados"></div>
+    <label for="busqueda-compania" class="busqueda-label">Selecciona una compañía:</label>
+    <select id="busqueda-compania" class="busqueda-select">
+    </select>
+    <button id="buscar-btn" class="buscar-btn">🔎 Buscar</button>
 </div>
 
 <div id="resultado-busqueda" class="busqueda-resultados"></div>
+
 {% endblock %}
 
 {% block link_script %}
