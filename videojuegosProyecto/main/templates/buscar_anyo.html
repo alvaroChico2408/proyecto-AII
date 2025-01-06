@@ -6,15 +6,9 @@
 
 {% block contenido %}
 <div class="busqueda-container">
-    <h2 class="busqueda-title">📅 Búsqueda por Año</h2>
-
-    <div class="busqueda-formulario">
-        <label for="busqueda-anio" class="busqueda-label">Introduce un año (Ej: 1998):</label>
-        <input type="number" id="busqueda-anio" class="busqueda-input" min="1000" max="2025">
-        <button id="buscar-btn" class="busqueda-btn buscar-btn">🔎 Buscar</button>
-    </div>
-
-    <div id="resultado-busqueda" class="busqueda-resultados"></div>
+    <label for="busqueda-anio" class="busqueda-label">Introduce un año:</label>
+    <input type="text" id="busqueda-anio" class="busqueda-input">
+    <button id="buscar-btn" class="buscar-btn">🔎 Buscar</button>
 </div>
 
 <div id="resultado-busqueda" class="busqueda-resultados"></div>
