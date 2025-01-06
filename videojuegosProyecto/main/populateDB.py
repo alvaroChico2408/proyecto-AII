@@ -1,38 +1,44 @@
-from .models import Developer, Company, Platform, VideoGame
+from whoosh.index import create_in, open_dir
+from whoosh.fields import Schema, TEXT, NUMERIC
+from whoosh.writing import AsyncWriter
 from bs4 import BeautifulSoup
 import urllib.request
 import re
+import os, shutil
+from .models import Developer, Company, Platform  # Modelos de Django
 
-# lineas para evitar error SSL
-import os, ssl
-if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
-getattr(ssl, '_create_unverified_context', None)):
-    ssl._create_default_https_context = ssl._create_unverified_context
-    
-PAGINAS= 5
+PAGINAS = 5
+INDEX_DIR = "whoosh_index"
 
+# Definir esquema de Whoosh
+schema = Schema(
+    title=TEXT(stored=True),
+    year=NUMERIC(stored=True),
+    platforms=TEXT(stored=True),
+    developers=TEXT(stored=True),
+    companies=TEXT(stored=True),
+    description=TEXT(stored=True)
+)
+
+# Crear índice si no existe
+if not os.path.exists(INDEX_DIR):
+    os.mkdir(INDEX_DIR)
+    ix = create_in(INDEX_DIR, schema=schema)
+else:
+    ix = open_dir(INDEX_DIR)
 
 def populate_database():
-    
-    #borrar tablas
-    Developer.objects.all().delete()
-    Company.objects.all().delete()
-    Platform.objects.all().delete()
-    VideoGame.objects.all().delete()
-    
-    lista=[]
-    # Crear sets para almacenar plataformas, desarrolladores y compañías sin duplicados
+    writer = AsyncWriter(ix)  # Evita bloqueos de escritura
+
     desarrolladores_set = set()
     companias_set = set()
     plataformas_set = set()
-    
-    for p in range(1,PAGINAS+1):
-        url="https://playthatgame.co.uk/?action=biglist&num="+str(p)
+
+    for p in range(1, PAGINAS + 1):
+        url = "https://playthatgame.co.uk/?action=biglist&num=" + str(p)
         f = urllib.request.urlopen(url)
-        s = BeautifulSoup(f,"lxml")      
+        s = BeautifulSoup(f, "lxml")
         filas = s.find("table", class_=["biglist"]).find_all("tr")
-        
-        
 
         #Cada fila tiene dos columnas
         for fila in filas:
@@ -104,17 +110,20 @@ def populate_database():
                 #Insertamos en el set
                 plataformas_set.update(plataformas_lista)
                 
-                # **Guardar VideoGame en la base de datos**
-                video_game, created = VideoGame.objects.get_or_create(
+                # **Guardar en Whoosh**
+                writer.add_document(
                     title=titulo,
                     year=year,
-                    description=opinion,
+                    platforms=plataformas_string,
                     developers=desarrolladores_string,
                     companies=companias_string,
-                    platforms=plataformas_string
+                    description=opinion
                 )
-                print(f"Guardado: {video_game.title}")
-    # **Guardar desarrolladores, compañías y plataformas sin duplicados**
+                print(f"📥 Indexado en Whoosh: {titulo}")
+
+    writer.commit()  # Guardar cambios en Whoosh
+
+    # **Insertar en la base de datos**
     for dev in desarrolladores_set:
         Developer.objects.get_or_create(name=dev)
 
@@ -123,8 +132,5 @@ def populate_database():
 
     for plat in plataformas_set:
         Platform.objects.get_or_create(name=plat)
-        
-    print("Todos los datos han sido almacenados correctamente.")
-                
-    return True
 
+    print("✅ Whoosh actualizado y entidades almacenadas en la base de datos.")

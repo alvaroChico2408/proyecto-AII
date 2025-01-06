@@ -1,4 +1,28 @@
 from django.db import models
+from whoosh.index import create_in, open_dir
+from whoosh.fields import Schema, TEXT, NUMERIC
+from whoosh.qparser import QueryParser
+import os
+
+# **Directorio donde se almacenará el índice de Whoosh**
+INDEX_DIR = "whoosh_index"
+
+# **Esquema de Whoosh para indexar videojuegos**
+schema = Schema(
+    title=TEXT(stored=True),
+    year=NUMERIC(stored=True),
+    platforms=TEXT(stored=True),
+    developers=TEXT(stored=True),
+    companies=TEXT(stored=True),
+    description=TEXT(stored=True)
+)
+
+# **Función para obtener o crear el índice Whoosh**
+def get_whoosh_index():
+    if not os.path.exists(INDEX_DIR):
+        os.mkdir(INDEX_DIR)
+        return create_in(INDEX_DIR, schema=schema)
+    return open_dir(INDEX_DIR)
 
 class Developer(models.Model):
     id = models.AutoField(primary_key=True)
@@ -31,20 +55,3 @@ class Platform(models.Model):
 
     class Meta:
         ordering = ('name', )
-
-
-class VideoGame(models.Model):
-    id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=200)
-    year = models.IntegerField()
-    description = models.TextField()
-    
-    developers = models.CharField(max_length=500, blank=True)  # Guardará nombres separados por comas
-    companies = models.CharField(max_length=500, blank=True)   # Guardará nombres separados por comas
-    platforms = models.CharField(max_length=500, blank=True)   # Guardará nombres separados por comas
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        ordering = ('title', )

@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from .populateDB import populate_database
-from .models import Developer, Company, Platform, VideoGame
+from .models import Developer, Company, Platform, get_whoosh_index
+from whoosh.index import exists_in, open_dir
+import os
+import shutil
 
 
 #muestra los títulos de las recetas que están registradas
@@ -13,9 +16,15 @@ def database(request):
 
 def ejecutar_carga(request):
     try:
+        
+         # **Ejecutar la carga de datos en Whoosh y la BD**
         populate_database()
-         # Contar los registros insertados en cada tabla
-        juegos_count = VideoGame.objects.count()
+        
+        # **Abrir el índice de Whoosh y contar los juegos indexados**
+        ix = get_whoosh_index()
+        with ix.searcher() as searcher:
+            juegos_count = searcher.doc_count()  # Cuenta el número de documentos indexados en Whoosh
+        
         plataformas_count = Platform.objects.count()
         desarrolladores_count = Developer.objects.count()
         companias_count = Company.objects.count()
@@ -34,26 +43,46 @@ def ejecutar_carga(request):
 def eliminar_database(request):
     if request.method == "POST":
         try:
+            # **Eliminar registros de la base de datos**
             Developer.objects.all().delete()
             Company.objects.all().delete()
             Platform.objects.all().delete()
-            VideoGame.objects.all().delete()
-            return JsonResponse({'status': 'success', 'message': 'Base de datos eliminada correctamente'})
+            
+            # **Eliminar el índice de Whoosh**
+            whoosh_index_path = "whoosh_index"
+            if os.path.exists(whoosh_index_path):
+                shutil.rmtree(whoosh_index_path)  # Elimina el directorio del índice
+                
+            get_whoosh_index()
+
+            return JsonResponse({'status': 'success', 'message': 'Base de datos e índice Whoosh eliminados correctamente'})
+        
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)})
+
     return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
 
 def verificar_estado_bd(request):
-    hay_datos = VideoGame.objects.exists() or Platform.objects.exists() or Developer.objects.exists() or Company.objects.exists()
+    # **Verificar si hay datos en la BD**
+    hay_datos_bd = Platform.objects.exists() or Developer.objects.exists() or Company.objects.exists()
+    
+    # **Verificar si hay datos en Whoosh**
+    whoosh_index_path = "whoosh_index"
+    hay_datos_whoosh = exists_in(whoosh_index_path)  # Verifica si el índice Whoosh existe
+
+    juegos_count = 0
+    if hay_datos_whoosh:
+        ix = open_dir(whoosh_index_path)
+        with ix.searcher() as searcher:
+            juegos_count = searcher.doc_count()  # Contar cuántos documentos hay en el índice
 
     return JsonResponse({
-        'hay_datos': hay_datos,
-        'juegos': VideoGame.objects.count(),
+        'hay_datos': hay_datos_bd or juegos_count > 0,  # Hay datos si BD o Whoosh tiene contenido
+        'juegos': juegos_count,
         'plataformas': Platform.objects.count(),
         'desarrolladores': Developer.objects.count(),
         'companias': Company.objects.count(),
     })
-
 def busqueda(request):
     return render(request, "busqueda.html")
 

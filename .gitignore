@@ -5,3 +5,7 @@ videojuegosProyecto/videojuegosProyecto/__pycache__
 videojuegosProyecto/main/__pycache__
 
 videojuegosProyecto/main/migrations/__pycache__
+
+whoosh_index
+
+db.sqlite3
