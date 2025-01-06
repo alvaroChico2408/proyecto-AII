@@ -9,21 +9,10 @@
     <h2 class="busqueda-title">🔍 Selecciona un método de búsqueda</h2>
 
     <div class="busqueda-opciones">
-        <button class="busqueda-btn" id="buscar-por-anio">📅 Buscar por Año</button>
-        <button class="busqueda-btn" id="buscar-por-plataforma">🎮 Buscar por Plataforma</button>
-        <button class="busqueda-btn" id="buscar-por-desarrollador">👨‍💻 Buscar por Desarrollador</button>
-        <button class="busqueda-btn" id="buscar-por-compania">🏢 Buscar por Compañía</button>
+        <a href="/busqueda/anyo" class="busqueda-btn">📅 Buscar por Año</a>
+        <a href="/busqueda/plataforma" class="busqueda-btn">🎮 Buscar por Plataforma</a>
+        <a href="/busqueda/desarrollador" class="busqueda-btn">👨‍💻 Buscar por Desarrollador</a>
+        <a href="/busqueda/compania" class="busqueda-btn">🏢 Buscar por Compañía</a>
     </div>
-
-    <div id="busqueda-form" class="busqueda-formulario" style="display: none;">
-        <input type="text" id="busqueda-input" class="busqueda-input" placeholder="Ingrese el término de búsqueda">
-        <button id="buscar-btn" class="busqueda-btn buscar-btn">🔎 Buscar</button>
-    </div>
-
-    <div id="resultado-busqueda" class="busqueda-resultados"></div>
 </div>
-{% endblock %}
-
-{% block link_script %}
-    <script src="{% static 'scripts/busqueda_script.js' %}"></script>
 {% endblock %}

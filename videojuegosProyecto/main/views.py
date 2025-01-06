@@ -53,6 +53,18 @@ def verificar_estado_bd(request):
         'desarrolladores': Developer.objects.count(),
         'companias': Company.objects.count(),
     })
-    
+
 def busqueda(request):
     return render(request, "busqueda.html")
+
+def buscar_anyo(request):
+    return render(request, "buscar_anyo.html")
+
+def buscar_plataforma(request):
+    return render(request, "buscar_plataforma.html")
+
+def buscar_desarrollador(request):
+    return render(request, "buscar_desarrollador.html")
+
+def buscar_compania(request):
+    return render(request, "buscar_compania.html")

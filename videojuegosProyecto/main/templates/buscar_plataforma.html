@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% block link_css %} 
+    <link rel="stylesheet" href="{% static 'css/busqueda_styles.css' %}"> 
+{% endblock %}
+
+{% block contenido %}
+<div class="busqueda-container">
+    <h2 class="busqueda-title">🎮 Búsqueda por Plataforma</h2>
+
+    <div class="busqueda-formulario">
+        <label for="busqueda-plataforma" class="busqueda-label">Introduce una plataforma:</label>
+        <input type="text" id="busqueda-plataforma" class="busqueda-input">
+        <button id="buscar-btn" class="busqueda-btn buscar-btn">🔎 Buscar</button>
+    </div>
+
+    <div id="resultado-busqueda" class="busqueda-resultados"></div>
+</div>
+
+<div id="resultado-busqueda" class="busqueda-resultados"></div>
+{% endblock %}
+
+{% block link_script %}
+    <script src="{% static 'scripts/busqueda_script.js' %}"></script>
+{% endblock %}

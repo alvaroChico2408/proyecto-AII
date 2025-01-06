@@ -1,77 +1,68 @@
-/* Estilos generales de la pestaña de búsqueda */
+/* Contenedor de búsqueda */
 .busqueda-container {
+    position: relative;
+    width: 80%;
+    max-width: 500px;
     background: rgba(0, 0, 0, 0.85);
-    border-radius: 15px;
-    padding: 20px;
+    padding: 15px;
+    border-radius: 10px;
     box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.6);
-    width: 90%;
-    max-width: 600px;
-    margin: 50px auto;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinea todo a la izquierda */
+    position: absolute;
+    top: 10px;
+    left: 10px;
 }
 
 /* Título de la búsqueda */
 .busqueda-title {
-    font-size: 1.8rem;
-    color: yellow;
-    text-shadow: 3px 3px 8px rgba(255, 204, 0, 0.8);
-}
-
-/* Contenedor de botones */
-.busqueda-opciones {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-/* Botones de búsqueda */
-.busqueda-btn {
-    background: linear-gradient(90deg, #ff00ff, #ffcc00);
-    box-shadow: 0px 0px 10px rgba(255, 0, 255, 0.8);
     font-size: 1.2rem;
-    padding: 10px;
-    border-radius: 5px;
-    text-transform: uppercase;
-    font-family: 'Press Start 2P', cursive;
-    cursor: pointer;
-    transition: all 0.3s;
+    color: yellow;
+    text-shadow: 2px 2px 8px rgba(255, 204, 0, 0.8);
+    margin-bottom: 5px;
 }
 
-.busqueda-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0px 0px 15px rgba(255, 0, 255, 1);
-}
-
-/* Formulario de entrada */
-.busqueda-formulario {
-    margin-top: 20px;
-}
-
+/* Estilos del input */
 .busqueda-input {
     width: 80%;
-    padding: 10px;
-    font-size: 1rem;
-    font-family: 'Press Start 2P', cursive;
-    border: 2px solid #ffcc00;
-    background-color: black;
+    padding: 8px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
     color: white;
     text-align: center;
+    margin-bottom: 5px;
 }
 
+/* Botón de búsqueda */
 .buscar-btn {
-    background: linear-gradient(90deg, #00ff00, #008000);
-    box-shadow: 0px 0px 10px rgba(0, 255, 0, 0.8);
+    font-size: 0.9rem;
+    padding: 5px 10px;
+    background: linear-gradient(90deg, #00ff00, #009900);
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 0px 8px rgba(0, 255, 0, 0.8);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .buscar-btn:hover {
+    transform: scale(1.05);
     box-shadow: 0px 0px 15px rgba(0, 255, 0, 1);
 }
 
-/* Resultados de búsqueda */
+/* Contenedor de resultados */
 .busqueda-resultados {
-    margin-top: 20px;
-    font-size: 1.2rem;
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.4);
+    font-size: 1rem;
     color: white;
-    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
+    text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.5);
 }
