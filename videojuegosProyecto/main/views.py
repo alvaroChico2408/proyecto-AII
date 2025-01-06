@@ -89,16 +89,44 @@ def busqueda(request):
 def buscar_nombre(request):
     return render(request, "buscar_nombre.html")
 
-def buscar_por_nombre(request):
-    query = request.GET.get("q", "")
+from django.http import JsonResponse
+from whoosh.index import open_dir
+from whoosh.qparser import QueryParser
 
-    if query:
-        juegos = VideoGame.objects.filter(title__icontains=query).values(
-            "title", "year", "platforms", "developers", "description"
-        )
-        return JsonResponse(list(juegos), safe=False)
-    
-    return JsonResponse([], safe=False)
+whoosh_index_path = "whoosh_index"
+
+def buscar_por_nombre(request):
+    query = request.GET.get("q", "").strip()
+
+    if not query:
+        return JsonResponse([], safe=False)  # Retorna lista vacía si no hay consulta
+
+    try:
+        # Abre el índice de Whoosh
+        ix = open_dir(whoosh_index_path)
+        with ix.searcher() as searcher:
+            # Construye el parser para buscar en el campo "title"
+            parser = QueryParser("title", ix.schema)
+            query_obj = parser.parse(query)
+            results = searcher.search(query_obj, limit=10)  # Máximo 10 resultados
+            
+            # Convertimos los resultados en una lista de diccionarios
+            juegos = [
+                {
+                    "title": r["title"],
+                    "year": r["year"],
+                    "platforms": r["platforms"],
+                    "developers": r["developers"],
+                    "description": r["description"],
+                }
+                for r in results
+            ]
+
+        return JsonResponse(juegos, safe=False)
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
 
 def buscar_plataforma(request):
     return render(request, "buscar_plataforma.html")
