@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+{% block link_css %} 
+    <link rel="stylesheet" href="{% static 'css/busqueda_styles.css' %}"> 
+{% endblock %}
+
+{% block contenido %}
+<div class="busqueda-container">
+    <h2 class="busqueda-title">🔍 Selecciona un método de búsqueda</h2>
+
+    <div class="busqueda-opciones">
+        <button class="busqueda-btn" id="buscar-por-anio">📅 Buscar por Año</button>
+        <button class="busqueda-btn" id="buscar-por-plataforma">🎮 Buscar por Plataforma</button>
+        <button class="busqueda-btn" id="buscar-por-desarrollador">👨‍💻 Buscar por Desarrollador</button>
+        <button class="busqueda-btn" id="buscar-por-compania">🏢 Buscar por Compañía</button>
+    </div>
+
+    <div id="busqueda-form" class="busqueda-formulario" style="display: none;">
+        <input type="text" id="busqueda-input" class="busqueda-input" placeholder="Ingrese el término de búsqueda">
+        <button id="buscar-btn" class="busqueda-btn buscar-btn">🔎 Buscar</button>
+    </div>
+
+    <div id="resultado-busqueda" class="busqueda-resultados"></div>
+</div>
+{% endblock %}
+
+{% block link_script %}
+    <script src="{% static 'scripts/busqueda_script.js' %}"></script>
+{% endblock %}
