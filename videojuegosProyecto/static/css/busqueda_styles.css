@@ -11,6 +11,7 @@
     align-items: center; /* Alinea en una única línea */
     justify-content: flex-start; /* Asegura que estén alineados en una línea */
     display: flex;
+    overflow: hidden; /* Evita el desbordamiento del contenido */
 }
 
 /* Título de la búsqueda */
@@ -97,4 +98,15 @@
     font-size: 1.2rem;
     color: white;
     text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
+}
+
+.busqueda-select {
+    flex-grow: 0; /* Permite que el select se ajuste sin romper el diseño */
+    max-width: 300px; /* Ajusta el tamaño máximo */
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #000;
+    color: white;
+    border: 1px solid yellow;
 }

@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <p style="font-size: 14px; line-height: 1.3em;">
                             <strong style="color: #D100D1;">Nombre:</strong> <span style="color: #00BFFF;">${juego.title}</span> <br>
                             <strong style="color: #D100D1;">Año:</strong> <span style="color: #00BFFF;">${juego.year}</span> <br>
+                            <strong style="color: #D100D1;">Compañías:</strong> <span style="color: #00BFFF;">${juego.companies}</span> <br>
                             <strong style="color: #D100D1;">Plataformas:</strong> <span style="color: #00BFFF;">${juego.platforms}</span> <br>
                             <strong style="color: #D100D1;">Desarrolladores:</strong> <span style="color: #00BFFF;">${juego.developers}</span> <br>
                             <strong style="color: #D100D1;">Opinión:</strong> <span style="color: #00BFFF;">${juego.description}</span>
@@ -114,6 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <p style="font-size: 14px; line-height: 1.4em;">
                             <strong style="color: #D100D1;">Nombre:</strong> <span style="color: #00BFFF;">${juego.title}</span> <br>
                             <strong style="color: #D100D1;">Año:</strong> <span style="color: #00BFFF;">${juego.year}</span> <br>
+                            <strong style="color: #D100D1;">Compañías:</strong> <span style="color: #00BFFF;">${juego.companies}</span> <br>
                             <strong style="color: #D100D1;">Plataformas:</strong> <span style="color: #00BFFF;">${juego.platforms}</span> <br>
                             <strong style="color: #D100D1;">Desarrolladores:</strong> <span style="color: #00BFFF;">${juego.developers}</span> <br>
                             <strong style="color: #D100D1;">Opinión:</strong> <span style="color: #00BFFF;">${juego.opinion}</span>

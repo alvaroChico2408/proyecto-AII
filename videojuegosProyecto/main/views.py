@@ -3,9 +3,11 @@ from django.http import JsonResponse
 from .populateDB import populate_database
 from .models import Developer, Company, Platform, get_whoosh_index
 from whoosh.index import exists_in, open_dir
+from whoosh.qparser import QueryParser
 import os
 import shutil
 
+whoosh_index_path = "whoosh_index"
 
 #muestra los títulos de las recetas que están registradas
 def inicio(request):
@@ -49,7 +51,6 @@ def eliminar_database(request):
             Platform.objects.all().delete()
             
             # **Eliminar el índice de Whoosh**
-            whoosh_index_path = "whoosh_index"
             if os.path.exists(whoosh_index_path):
                 shutil.rmtree(whoosh_index_path)  # Elimina el directorio del índice
                 
@@ -67,7 +68,6 @@ def verificar_estado_bd(request):
     hay_datos_bd = Platform.objects.exists() or Developer.objects.exists() or Company.objects.exists()
     
     # **Verificar si hay datos en Whoosh**
-    whoosh_index_path = "whoosh_index"
     hay_datos_whoosh = exists_in(whoosh_index_path)  # Verifica si el índice Whoosh existe
 
     juegos_count = 0
@@ -88,12 +88,6 @@ def busqueda(request):
 
 def buscar_nombre(request):
     return render(request, "buscar_nombre.html")
-
-from django.http import JsonResponse
-from whoosh.index import open_dir
-from whoosh.qparser import QueryParser
-
-whoosh_index_path = "whoosh_index"
 
 def buscar_por_nombre(request):
     query = request.GET.get("q", "").strip()
@@ -117,6 +111,7 @@ def buscar_por_nombre(request):
                     "year": r["year"],
                     "platforms": r["platforms"],
                     "developers": r["developers"],
+                    "companies": r['companies'],
                     "description": r["description"],
                 }
                 for r in results
@@ -142,13 +137,30 @@ def obtener_companias(request):
     return JsonResponse(companias, safe=False)
 
 def buscar_por_compania(request):
-    compania = request.GET.get('q', '')
+    compania = request.GET.get("q", "").strip()  # Obtiene el parámetro de búsqueda
 
     if not compania:
-        return JsonResponse([], safe=False)
+        return JsonResponse([], safe=False)  # Si no hay consulta, devuelve una lista vacía
 
-    juegos = VideoGame.objects.filter(companies__icontains=compania).values(
-        'title', 'year', 'platforms', 'developers', 'opinion'
-    )
+    try:
+        ix = open_dir(whoosh_index_path)  # Abre el índice de Whoosh
+        with ix.searcher() as searcher:
+            query = QueryParser("companies", ix.schema).parse(f'"{compania}"')
+            print(f"Consulta Whoosh: {query}")
+            results = searcher.search(query, limit=None)  # Busca sin límite de resultados
+            
+            juegos = [
+                {
+                    "title": r["title"],
+                    "year": r["year"],
+                    "platforms": r["platforms"],
+                    "developers": r["developers"],
+                    "companies": r['companies'],
+                    "opinion": r["description"],  # Mapea la descripción correctamente
+                }
+                for r in results
+            ]
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
 
-    return JsonResponse(list(juegos), safe=False)
+    return JsonResponse(juegos, safe=False)  # Devuelve los resultados en formato JSON
