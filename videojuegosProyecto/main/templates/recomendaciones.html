@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block link_css %} 
+    <link rel="stylesheet" href="{% static 'css/recomendaciones_styles.css' %}"> 
+{% endblock %}
+
+{% block contenido %}
+<div class="recomendaciones-container">
+    <h1 class="titulo-recomendaciones">🔮 Recomendaciones basadas en <span id="juego-base"></span></h1>
+
+    <div id="resultado-recomendaciones" class="recomendaciones-resultados">
+        <p class="loading-text">Cargando recomendaciones...</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block link_script %}
+    <script src="{% static 'scripts/recomendacion_script.js' %}"></script>
+{% endblock %}

@@ -238,3 +238,6 @@ def buscar_por_compania(request):
         return JsonResponse({"error": str(e)}, status=500)
 
     return JsonResponse(juegos, safe=False)  # Devuelve los resultados en formato JSON
+
+def recomendaciones(request):
+    return render(request, "recomendaciones.html")
