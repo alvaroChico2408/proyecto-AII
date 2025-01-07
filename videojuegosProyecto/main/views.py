@@ -126,6 +126,43 @@ def buscar_por_nombre(request):
 def buscar_plataforma(request):
     return render(request, "buscar_plataforma.html")
 
+def obtener_plataformas(request):
+    plataformas = list(Platform.objects.values_list('name', flat=True).distinct())
+    return JsonResponse(plataformas, safe=False)
+
+def buscar_por_plataforma(request):
+    plataforma = request.GET.get("q", "").strip()  # Obtiene el parámetro de búsqueda
+
+    if not plataforma:
+        return JsonResponse([], safe=False)  # Si no hay consulta, devuelve una lista vacía
+
+    try:
+        ix = open_dir(whoosh_index_path)  # Abre el índice de Whoosh
+        with ix.searcher() as searcher:
+            # Se usa el campo "platforms" en lugar de "developers"
+            query = QueryParser("platforms", ix.schema).parse(f'"{plataforma}"')
+            print(f"Consulta Whoosh: {query}")
+
+            results = searcher.search(query, limit=None)  # Busca sin límite de resultados
+            
+            juegos = [
+                {
+                    "title": r["title"],
+                    "year": r["year"],
+                    "platforms": r["platforms"],
+                    "developers": r["developers"],
+                    "companies": r["companies"],  # Ahora correctamente referenciado
+                    "opinion": r["description"],  # Mapea la descripción correctamente
+                }
+                for r in results
+            ]
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse(juegos, safe=False)
+
+
 
 def buscar_desarrollador(request):
     return render(request, "buscar_desarrollador.html")
@@ -165,7 +202,6 @@ def buscar_por_desarrollador(request):
         return JsonResponse({"error": str(e)}, status=500)
 
     return JsonResponse(juegos, safe=False)
-
 
 def buscar_compania(request):
     return render(request, "buscar_compania.html")
