@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <strong style="color: #D100D1;">Compañías:</strong> <span style="color: #00BFFF;">${juego.companies}</span> <br>
                         <strong style="color: #D100D1;">Plataformas:</strong> <span style="color: #00BFFF;">${juego.platforms}</span> <br>
                         <strong style="color: #D100D1;">Desarrolladores:</strong> <span style="color: #00BFFF;">${juego.developers}</span> <br>
-                        <strong style="color: #D100D1;">Opinión:</strong> <span style="color: #00BFFF;">${juego.opinion}</span>
+                        <strong style="color: #D100D1;">Opinión:</strong> <span style="color: #00BFFF;">${juego.description}</span>
                     </p>
                     <hr style="border: 0; height: 1px; background: rgba(255,255,255,0.3); margin: 5px 0;">
                 `;

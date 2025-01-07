@@ -5,6 +5,7 @@ from .models import Developer, Company, Platform, get_whoosh_index
 from whoosh.index import exists_in, open_dir
 from whoosh.qparser import QueryParser
 from whoosh.query import Wildcard
+from .recommendations import ContentRecommender
 import os
 import shutil
 
@@ -241,3 +242,41 @@ def buscar_por_compania(request):
 
 def recomendaciones(request):
     return render(request, "recomendaciones.html")
+
+def obtener_recomendaciones(request):
+    juego_base = request.GET.get("title", "").strip()
+
+    if not juego_base:
+        return JsonResponse([], safe=False)
+
+    try:
+        # **Inicializamos el recomendador**
+        recommender = ContentRecommender()
+        
+        # **Obtenemos las recomendaciones basadas en contenido**
+        recomendaciones = recommender.getRecommendedItems(juego_base)
+
+        # **Preparamos la respuesta con información detallada**
+        juegos_recomendados = []
+        ix = open_dir(whoosh_index_path)
+        with ix.searcher() as searcher:
+            for juego in recomendaciones:
+                query = QueryParser("title", ix.schema).parse(f'"{juego["title"]}"')
+                result = searcher.search(query, limit=1)
+
+                if result:
+                    r = result[0]
+                    juegos_recomendados.append({
+                        "title": r["title"],
+                        "year": r["year"],
+                        "platforms": r["platforms"],
+                        "developers": r["developers"],
+                        "companies": r["companies"],
+                        "description": r["description"],
+                        "similitud": juego["similitud"],  # Ya está en porcentaje
+                    })
+
+        return JsonResponse(juegos_recomendados, safe=False)
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)

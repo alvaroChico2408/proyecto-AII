@@ -37,4 +37,5 @@ urlpatterns = [
     path("obtener_plataformas/", views.obtener_plataformas),
     path("buscarPorPlataforma/", views.buscar_por_plataforma),
     path("recomendaciones/", views.recomendaciones),
+    path("obtener_recomendaciones/", views.obtener_recomendaciones),
 ]
