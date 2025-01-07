@@ -32,4 +32,6 @@ urlpatterns = [
     path("buscarPorNombre/", views.buscar_por_nombre),
     path("obtener_companias/", views.obtener_companias),
     path("buscarPorCompania/", views.buscar_por_compania),
+    path("obtener_desarrolladores/", views.obtener_desarrolladores),
+    path("buscarPorDesarrollador/", views.buscar_por_desarrollador),
 ]

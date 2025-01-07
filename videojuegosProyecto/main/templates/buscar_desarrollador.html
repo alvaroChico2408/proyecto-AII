@@ -6,20 +6,15 @@
 
 {% block contenido %}
 <div class="busqueda-container">
-    <h2 class="busqueda-title">👨‍💻 Búsqueda por Desarrollador</h2>
-
-    <div class="busqueda-formulario">
-        <label for="busqueda-desarrollador" class="busqueda-label">Introduce un desarrollador:</label>
-        <input type="text" id="busqueda-desarrollador" class="busqueda-input">
-        <button id="buscar-btn" class="busqueda-btn buscar-btn">🔎 Buscar</button>
-    </div>
-
-    <div id="resultado-busqueda" class="busqueda-resultados"></div>
+    <label for="busqueda-desarrollador" class="busqueda-label">Selecciona un desarrollador:</label>
+    <select id="busqueda-desarrollador" class="busqueda-select"></select>
+    <button id="buscar-btn" class="buscar-btn">🔎 Buscar</button>
 </div>
 
 <div id="resultado-busqueda" class="busqueda-resultados"></div>
+
 {% endblock %}
 
 {% block link_script %}
-    <script src="{% static 'scripts/busqueda_script.js' %}"></script>
+    <script src="{% static 'scripts/busqueda_desarrollador_script.js' %}"></script>
 {% endblock %}

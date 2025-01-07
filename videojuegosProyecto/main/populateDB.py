@@ -119,7 +119,7 @@ def populate_database():
                     companies=companias_string,
                     description=opinion
                 )
-                print(f"📥 Indexado en Whoosh: {titulo}")
+                print(f"📥 Indexado en Whoosh: {titulo},{companias_string}")
 
     writer.commit()  # Guardar cambios en Whoosh
 

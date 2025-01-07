@@ -4,6 +4,7 @@ from .populateDB import populate_database
 from .models import Developer, Company, Platform, get_whoosh_index
 from whoosh.index import exists_in, open_dir
 from whoosh.qparser import QueryParser
+from whoosh.query import Wildcard
 import os
 import shutil
 
@@ -90,44 +91,81 @@ def buscar_nombre(request):
     return render(request, "buscar_nombre.html")
 
 def buscar_por_nombre(request):
-    query = request.GET.get("q", "").strip()
+    query = request.GET.get("q", "").strip().lower()  # Obtiene y normaliza la consulta
 
     if not query:
-        return JsonResponse([], safe=False)  # Retorna lista vacía si no hay consulta
+        return JsonResponse([], safe=False)  # Si no hay consulta, devuelve lista vacía
 
     try:
-        # Abre el índice de Whoosh
-        ix = open_dir(whoosh_index_path)
+        ix = open_dir(whoosh_index_path)  # Abre el índice de Whoosh
         with ix.searcher() as searcher:
-            # Construye el parser para buscar en el campo "title"
-            parser = QueryParser("title", ix.schema)
-            query_obj = parser.parse(query)
-            results = searcher.search(query_obj, limit=10)  # Máximo 10 resultados
+            # Usamos `Wildcard` para buscar cualquier palabra que contenga la consulta
+            query_obj = Wildcard("title", f"*{query}*")  
+
+            print(f"Consulta Whoosh: {query_obj}")  # Depuración
+
+            results = searcher.search(query_obj)  # Busca hasta 20 resultados
             
-            # Convertimos los resultados en una lista de diccionarios
             juegos = [
                 {
                     "title": r["title"],
                     "year": r["year"],
                     "platforms": r["platforms"],
                     "developers": r["developers"],
-                    "companies": r['companies'],
+                    "companies": r["companies"],
                     "description": r["description"],
                 }
                 for r in results
             ]
 
-        return JsonResponse(juegos, safe=False)
-
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
 
+    return JsonResponse(juegos, safe=False)  # Devuelve los resultados en formato JSON
 
 def buscar_plataforma(request):
     return render(request, "buscar_plataforma.html")
 
+
 def buscar_desarrollador(request):
     return render(request, "buscar_desarrollador.html")
+
+def obtener_desarrolladores(request):
+    desarrolladores = list(Developer.objects.values_list('name', flat=True).distinct())
+    return JsonResponse(desarrolladores, safe=False)
+
+def buscar_por_desarrollador(request):
+    desarrollador = request.GET.get("q", "").strip()  # Obtiene el parámetro de búsqueda
+
+    if not desarrollador:
+        return JsonResponse([], safe=False)  # Si no hay consulta, devuelve una lista vacía
+
+    try:
+        ix = open_dir(whoosh_index_path)  # Abre el índice de Whoosh
+        with ix.searcher() as searcher:
+            # Se usa el campo "developers" en lugar de "companies"
+            query = QueryParser("developers", ix.schema).parse(f'"{desarrollador}"')
+            print(f"Consulta Whoosh: {query}")
+
+            results = searcher.search(query, limit=None)  # Busca sin límite de resultados
+            
+            juegos = [
+                {
+                    "title": r["title"],
+                    "year": r["year"],
+                    "platforms": r["platforms"],
+                    "developers": r["developers"],
+                    "companies": r["companies"],  # Ahora correctamente referenciado
+                    "opinion": r["description"],  # Mapea la descripción correctamente
+                }
+                for r in results
+            ]
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse(juegos, safe=False)
+
 
 def buscar_compania(request):
     return render(request, "buscar_compania.html")
