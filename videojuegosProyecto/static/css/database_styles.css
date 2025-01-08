@@ -76,7 +76,7 @@
     text-transform: uppercase;
     font-weight: bold;
     bottom: 10px; /* Lo mantiene en la parte inferior */
-    right: 300px;  /* Lo empuja más a la derecha */
+    right: 200px;  /* Lo empuja más a la derecha */
     width: 220px;
 }
 
@@ -98,4 +98,8 @@
     padding: 10px;
     background: rgba(10, 10, 10, 0.8);
     border-radius: 10px;
+    display: flex;  /* Asegura que los elementos estén en la misma línea */
+    align-items: center;  /* Alinea verticalmente los elementos */
+    justify-content: space-between; /* Espacia elementos horizontalmente */
+    flex-wrap: nowrap; /* Evita que los elementos salten a una nueva línea */
 }
