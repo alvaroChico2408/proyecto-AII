@@ -103,8 +103,6 @@ def buscar_por_nombre(request):
             # Usamos `Wildcard` para buscar cualquier palabra que contenga la consulta
             query_obj = Wildcard("title", f"*{query}*")  
 
-            print(f"Consulta Whoosh: {query_obj}")  # Depuración
-
             results = searcher.search(query_obj)  # Busca hasta 20 resultados
             
             juegos = [
@@ -142,7 +140,6 @@ def buscar_por_plataforma(request):
         with ix.searcher() as searcher:
             # Se usa el campo "platforms" en lugar de "developers"
             query = QueryParser("platforms", ix.schema).parse(f'"{plataforma}"')
-            print(f"Consulta Whoosh: {query}")
 
             results = searcher.search(query, limit=None)  # Busca sin límite de resultados
             
@@ -183,7 +180,6 @@ def buscar_por_desarrollador(request):
         with ix.searcher() as searcher:
             # Se usa el campo "developers" en lugar de "companies"
             query = QueryParser("developers", ix.schema).parse(f'"{desarrollador}"')
-            print(f"Consulta Whoosh: {query}")
 
             results = searcher.search(query, limit=None)  # Busca sin límite de resultados
             
@@ -221,7 +217,6 @@ def buscar_por_compania(request):
         ix = open_dir(whoosh_index_path)  # Abre el índice de Whoosh
         with ix.searcher() as searcher:
             query = QueryParser("companies", ix.schema).parse(f'"{compania}"')
-            print(f"Consulta Whoosh: {query}")
             results = searcher.search(query, limit=None)  # Busca sin límite de resultados
             
             juegos = [
